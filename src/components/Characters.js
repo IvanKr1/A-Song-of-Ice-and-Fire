@@ -1,8 +1,11 @@
-import React from "react";
+import React, {  useState } from "react";
+import { Link } from "react-router-dom";
 import "../scss/Characters.scss";
-import { checkIfAlive, checkForAllegiances, checkForName } from "../functions";
+import { checkIfAlive, checkForName } from "../functions";
 
 const Characters = ({ characters }) => {
+  const [params, setParams] = useState(null)
+
   const renderCharacters = () =>
     characters.map((character, index) => {
       const { name, aliases, died, born, gender, culture, allegiances, books } =
@@ -18,13 +21,25 @@ const Characters = ({ characters }) => {
       let ifDiedExist = died.length > 0;
       const isAlive = checkIfAlive(ifBornExist, ifDiedExist, character);
 
+      let houseId = [];
+
+      if (allegiances.length !== 0) {
+        for (const url of allegiances) {
+          houseId.push(url.slice(url.lastIndexOf("/") + 1, url.length));
+        }
+      }
+
       return (
         <tr key={index}>
           <td>{checkName}</td>
           <td>{isAlive}</td>
           <td>{gender}</td>
           <td>{culture.length > 0 ? culture : "Unknown"}</td>
-          <td>{"allegiances"}</td>
+          <td>
+            <Link onClick={(e) => setParams(e.target.innerHTML)} to={`/house/${params}`} style={{ textDecoration: "none" }}>
+              {houseId.length > 1 ? `${houseId}` : houseId}{" "}
+            </Link>
+          </td>
           <td>{books.length}</td>
         </tr>
       );

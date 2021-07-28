@@ -41,19 +41,6 @@ export const checkIfAlive = (ifBorn, ifDied, character) => {
   return deathMsg;
 };
 
-export const checkForAllegiances = async (houses) => {
-  let houseNames = [];
-
-  if (houses.length !== 0) {
-    for (const url of houses) {
-      let res = await axios.get(url);
-      houseNames.push(res.data.name);
-    }
-  }
-
-  return houseNames;
-};
-
 export const checkForName = (ifName, ifAliases, character) => {
   const { name, aliases } = character;
 
