@@ -1,10 +1,29 @@
-import React, {  useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import "../scss/Characters.scss";
+import "../scss/CharactersTable.scss";
+
 import { checkIfAlive, checkForName } from "../functions";
 
-const Characters = ({ characters }) => {
-  const [params, setParams] = useState(null)
+const CharactersTable = ({ characters }) => {
+  const renderAllegiancesLink = (houseId) => {
+    if (houseId.length > 1) {
+      const multipleAllegiances = houseId.map((id, index) => {
+        return (
+          <Link key={index} to={`/house/${id}`} style={{ textDecoration: "none" }}>
+            {`${id} `}
+          </Link>
+        );
+      });
+
+      return multipleAllegiances;
+    } else {
+      return (
+        <Link to={`/house/${houseId}`} style={{ textDecoration: "none" }}>
+          {houseId}
+        </Link>
+      );
+    }
+  };
 
   const renderCharacters = () =>
     characters.map((character, index) => {
@@ -35,31 +54,29 @@ const Characters = ({ characters }) => {
           <td>{isAlive}</td>
           <td>{gender}</td>
           <td>{culture.length > 0 ? culture : "Unknown"}</td>
-          <td>
-            <Link onClick={(e) => setParams(e.target.innerHTML)} to={`/house/${params}`} style={{ textDecoration: "none" }}>
-              {houseId.length > 1 ? `${houseId}` : houseId}{" "}
-            </Link>
-          </td>
+          <td>{renderAllegiancesLink(houseId)}</td>
           <td>{books.length}</td>
         </tr>
       );
     });
 
   return (
-    <div className="characters__container">
+    <>
       <table className="characters__table">
-        <tr>
-          <th>Character</th>
-          <th>Alive</th>
-          <th>Gender</th>
-          <th>Culture</th>
-          <th>Allegiances</th>
-          <th># of Books</th>
-        </tr>
-        {renderCharacters()}
+        <thead>
+          <tr>
+            <th>Character</th>
+            <th>Alive</th>
+            <th>Gender</th>
+            <th>Culture</th>
+            <th>Allegiances</th>
+            <th># of Books</th>
+          </tr>
+        </thead>
+        <tbody>{renderCharacters()}</tbody>
       </table>
-    </div>
+    </>
   );
 };
 
-export default Characters;
+export default CharactersTable;

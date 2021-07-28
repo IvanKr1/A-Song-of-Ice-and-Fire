@@ -1,0 +1,16 @@
+@import "./variables.scss";
+
+button {
+    padding: $padding;
+    border-radius: 0.30rem;
+    color: $color-white;
+    background-color: black;
+    border: $border-none;
+    margin: 0.30rem;
+    font-size: $rem-1;
+}
+
+button:hover {
+    background-color: rgba(0,0,0,0.7);
+    cursor: $cursor-pointer;
+}

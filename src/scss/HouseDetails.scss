@@ -1,11 +1,13 @@
+@import "./variables.scss";
+
 .houseDetails__container {
-    display: flex;
-    flex-direction: column;
+    display: $display-flex;
+    flex-direction: $flex-direction-column;
     justify-content: flex-start;
 
     .houseDetails__heading {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
+        margin-top: $rem-1;
+        margin-bottom: $rem-1;
         font-size: calc(1.475rem + 2.7vw);
         font-weight: 300;
         line-height: 1.2;
@@ -16,7 +18,7 @@
     }
 
     .houseDetails__subHeading {
-        margin-bottom: 1rem;
+        margin-bottom: $rem-1;
         margin-top: 0;
         font-weight: 500;
         line-height: 1.2;
@@ -25,8 +27,8 @@
     }
 
     .houseDetails__list__group {
-        display: flex;
-        flex-direction: column;
+        display: $display-flex;
+        flex-direction: $flex-direction-column;
         padding-left: 0;
         margin-bottom: 0;
         border-radius: .25rem;
@@ -35,10 +37,10 @@
         li {
             position: relative;
             display: block;
-            padding: .5rem 1rem;
+            padding: $padding $rem-1;
             color: #fff;
             text-decoration: none;
-            background-color: #222;
+            background-color: #36304a;
             border: 1px solid #282828;
         }
 
@@ -67,18 +69,18 @@
         user-select: none;
         background-color: transparent;
         border: 1px solid transparent;
-        padding: .375rem 1rem;
-        font-size: 1rem;
+        padding: .375rem $rem-1;
+        font-size: $rem-1;
         border-radius: .25rem;
     }
 
 
     ul {
         list-style-type: disc;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
+        margin-block-start: $rem-1;
+        margin-block-end: $rem-1;
         margin-inline-start: 0rem;
         margin-inline-end: 0rem;
-        padding-inline-start: 1rem;
+        padding-inline-start: $rem-1;
     }
 }

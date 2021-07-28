@@ -1,15 +1,20 @@
 import React from "react";
-import "../scss/SearchField.scss"
+import "../scss/SearchField.scss";
 
 const SearchField = ({ onSearchCulture }) => {
   return (
     <div className="searchField__container">
       <input
+        type="input"
         className="searchField__input"
-        type="text"
-        placeholder="Search by Culture..."
+        name="culture"
+        id="culture"
+        required
         onChange={(e) => onSearchCulture(e.target.value)}
       />
+      <label htmlFor="culture" className="searchField__label">
+        Culture
+      </label>
     </div>
   );
 };

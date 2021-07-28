@@ -1,0 +1,52 @@
+@import "./variables.scss";
+
+.characters__table {
+    font-family: OpenSans-Regular;
+    border-collapse: collapse;
+    width: $width-100;
+    border: $border-none;
+
+    td,
+    th {
+        border: 1px solid #ddd;
+        padding: $padding;
+        border: $border-none;
+    }
+
+    tr {
+        font-size: $rem-1_2;
+        color: gray;
+        line-height: 1.2;
+        font-weight: unset;
+    }
+
+    tr:nth-child(even) {
+        background-color: #e4e2e2;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #fff;
+    }
+
+    tr:hover {
+        background-color: rgb(184, 184, 184);
+    }
+
+    th {
+        padding-top: $padding;
+        padding-bottom: $padding;
+        text-align: left;
+        background-color: #36304a;
+        font-size: 1.5rem;
+        color: #fff;
+        line-height: 1.2;
+        font-weight: unset;
+    }
+
+    th:nth-child(1) {
+        border-top-left-radius: 0.40rem;
+      }
+    th:nth-last-child(1) {
+        border-top-right-radius: 0.40rem;
+      }
+}

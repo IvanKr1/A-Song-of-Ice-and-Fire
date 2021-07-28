@@ -2,26 +2,31 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Heading from "./components/Heading";
 import SearchField from "./components/SearchField";
-import Characters from "./components/Characters";
+import CharactersTable from "./components/CharactersTable";
 import Pagination from "./components/Pagination";
 import Select from "./components/Select";
-import HouseDetails from "./components/HouseDetails";
+import HouseDetails from "./pages/HouseDetails";
+import Loading from "./components/Loading";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./scss/App.scss";
 
+const selectGenderOptions = ["All", "Female", "Male", "Unknown"];
+const selectResultsByPage = [10, 25, 50];
+
 const App = () => {
   const [characters, setCharacters] = useState([]);
-  const [culture, setCulture] = useState("");
+  const [currentCulture, setCurrentCulture] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentGender, setCurrentGender] = useState("");
   const [resultsByPage, setResultsByPage] = useState(10);
+  const [maxPageLength, setMaxPageLength] = useState(214);
 
   useEffect(() => {
     const fetchCharacters = async () => {
       setLoading(true);
       const res = await axios.get(
-        `https://www.anapioficeandfire.com/api/characters?page=${4}&pageSize=${resultsByPage}`
+        `https://www.anapioficeandfire.com/api/characters?page=${currentPage}&pageSize=${resultsByPage}`
       );
 
       for (const character of res.data) {
@@ -30,8 +35,6 @@ const App = () => {
         }
       }
 
-      console.log(`res.data`, res.data)
-
       setCharacters(res.data);
       setLoading(false);
     };
@@ -39,57 +42,81 @@ const App = () => {
     fetchCharacters();
   }, [currentPage, resultsByPage]);
 
-
   const onSearchCulture = (value) => {
-    setCulture(value);
+    setCurrentCulture(value);
   };
 
-  const getFirstPage = async () => {
+  const getFirstPage = () => {
     setCurrentPage(1);
   };
 
-  const getLastPage = async () => {
-    setCurrentPage(214);
+  const getLastPage = () => {
+    switch (resultsByPage) {
+      case "25":
+        setCurrentPage(86)
+        break;
+      case "50":
+        setCurrentPage(43)
+      break;
+      default:
+        setCurrentPage(214)
+        break;
+    }
   };
 
-  const getPreviousPage = async () => {
+  const getPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  const getNextPage = async () => {
-    if (currentPage < 214) {
+  const getNextPage = () => {
+    if (currentPage < maxPageLength) {
       setCurrentPage(currentPage + 1);
     }
   };
 
   const onSelectGender = (value) => {
-    setCurrentGender(value);
+    value === "All" ? setCurrentGender("") : setCurrentGender(value);
   };
 
   const onSelectResultsPerPage = (value) => {
+    switch (value) {
+      case "25":
+        setMaxPageLength(86)
+        break;
+      case "50":
+        setMaxPageLength(43)
+      break;
+      default:
+        setMaxPageLength(214)
+        break;
+    }
+
     setResultsByPage(value);
+    setCurrentPage(1)
   };
 
-  const filterCharacters = characters.filter((character) => {
-    if (currentGender.length !== 0 && culture.length !== 0) {
-      if (currentGender === "All") return character;
 
+  const filterCharacters = characters.filter((character) => {
+    const { culture, gender } = character;
+
+    let isCurrentGender = currentGender.length !== 0;
+    let isCurrentCulture = currentCulture.length !== 0;
+
+    if (isCurrentGender && isCurrentCulture) {
       return (
-        character.culture.toLowerCase().includes(culture.toLowerCase()) &&
-        character.gender.toLowerCase() === currentGender.toLowerCase()
+        culture.toLowerCase().includes(currentCulture.toLowerCase()) &&
+        gender.toLowerCase() === currentGender.toLowerCase()
       );
-    } else if (currentGender.length !== 0 && culture.length === 0) {
-      if (currentGender === "All") return character;
-      return character.gender.toLowerCase() === currentGender.toLowerCase();
+    } else if (isCurrentGender && !isCurrentCulture) {
+      return currentGender === ""
+        ? character
+        : currentGender.toLowerCase() === gender.toLowerCase();
     } else {
-      return character.culture.toLowerCase().includes(culture.toLowerCase());
+      return culture.toLowerCase().includes(currentCulture.toLowerCase());
     }
   });
-
-  const selectGenderOptions = ["All", "Female", "Male", "Unknown"];
-  const selectResultsByPage = [10, 25, 50];
 
   return (
     <Router>
@@ -97,24 +124,39 @@ const App = () => {
         <Heading />
         <Route exact path="/">
           <SearchField onSearchCulture={onSearchCulture} />
-          <Select options={selectGenderOptions} onChange={onSelectGender} />
           {loading ? (
-            <h2>Loading...</h2>
+            <Loading />
           ) : (
             <>
-              <Characters characters={filterCharacters} />
-              <Pagination
-                onClickFirstPage={getFirstPage}
-                onClickLastPage={getLastPage}
-                onClickPreviousPage={getPreviousPage}
-                onClickNextPage={getNextPage}
-              />
+              <div className="app__selectPagination">
+                <Pagination
+                  onClickFirstPage={getFirstPage}
+                  onClickLastPage={getLastPage}
+                  onClickPreviousPage={getPreviousPage}
+                  onClickNextPage={getNextPage}
+                />
+                <Select
+                  label="Filter By Gender"
+                  options={selectGenderOptions}
+                  onChange={onSelectGender}
+                />
+              </div>
+              <CharactersTable characters={filterCharacters} />
             </>
           )}
-          <Select
-            options={selectResultsByPage}
-            onChange={onSelectResultsPerPage}
-          />
+          <div
+            className={
+              loading
+                ? "loading app__select__characters"
+                : "app__select__characters"
+            }
+          >
+            <Select
+              label="Characters Per Page"
+              options={selectResultsByPage}
+              onChange={onSelectResultsPerPage}
+            />
+          </div>
         </Route>
         <Route exact path="/house/:houseId" component={HouseDetails} />
       </div>

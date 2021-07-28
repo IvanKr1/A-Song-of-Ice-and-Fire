@@ -2,30 +2,34 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../scss/HouseDetails.scss";
+import Button from "../components/Button";
+import Loading from "../components/Loading";
 
 const HouseDetails = (props) => {
   const [houseDetails, setHouseDetails] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const houseId = props.match.params.houseId;
 
   useEffect(() => {
     const fetchHouse = async () => {
+      setLoading(true);
       const res = await axios.get(
         `https://www.anapioficeandfire.com/api/houses/${houseId}`
       );
 
-      const {titles, seats} = res.data
+      const { titles, seats } = res.data;
 
-      if (titles[0] === "") titles[0] = "Unknown"
-      if (seats[0] === "") seats[0] = "Unknown"
+      if (titles[0] === "") titles[0] = "Unknown";
+      if (seats[0] === "") seats[0] = "Unknown";
 
       setHouseDetails(res.data);
+      setLoading(false);
     };
 
     fetchHouse();
-  }, []);
+  }, [houseId]);
 
-//   console.log(`houseDetails`, );
-//   console.log(`houseDetails`, houseDetails)
   const {
     name,
     words,
@@ -35,12 +39,15 @@ const HouseDetails = (props) => {
     diedOut,
     cadetBranches,
     overlord,
-    region
- } = houseDetails;
-
+    region,
+  } = houseDetails;
 
   return (
     <div className="houseDetails__container">
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
           <h1 className="houseDetails__heading">
             <span className="houseDetails__heading__span">House: {name}</span>
           </h1>
@@ -59,7 +66,7 @@ const HouseDetails = (props) => {
               Titles: <span>{`${titles}`}</span>
             </li>
             <li>
-              Seats: <span>{ `${seats}`}</span>
+              Seats: <span>{`${seats}`}</span>
             </li>
             <li>
               Has died out: <span>{diedOut ? diedOut : "Unknown"}</span>
@@ -68,13 +75,15 @@ const HouseDetails = (props) => {
               Has overlord:<span>{overlord ? " Yes" : " No"} </span>
             </li>
             <li>
-              Number of Cadet Branches:<span> {cadetBranches ? cadetBranches.length : 0}</span>
+              Number of Cadet Branches:
+              <span> {cadetBranches ? cadetBranches.length : 0}</span>
             </li>
           </ul>
-          <hr style={{ color: "#000" }} />
           <Link to="/" className="houseDetails__button__back">
-            Back
+            <Button>Back</Button>
           </Link>
+        </>
+      )}
     </div>
   );
 };

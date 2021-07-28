@@ -1,14 +1,27 @@
-import React from 'react'
+import React from "react";
+import Button from "./Button";
+import RightArrow from "../assets/right.png";
+import LeftArrow from "../assets/left.png";
+import "../scss/Pagination.scss"
 
-const Pagination = ({onClickFirstPage, onClickLastPage, onClickPreviousPage, onClickNextPage}) => {
-    return (
-        <nav>
-            <button onClick={onClickFirstPage}>First Page</button>
-            <button onClick={onClickPreviousPage}>Previous Page</button>
-            <button onClick={onClickNextPage}>Next Page</button>
-            <button onClick={onClickLastPage}>Last Page</button>
-        </nav>
-    )
-}
+const Pagination = ({
+  onClickFirstPage,
+  onClickLastPage,
+  onClickPreviousPage,
+  onClickNextPage,
+}) => {
+  return (
+    <nav className="pagionation__container">
+      <Button onClick={onClickFirstPage}>First Page</Button>
+      <Button onClick={onClickPreviousPage}>
+        <img src={LeftArrow} alt="previous" />
+      </Button>
+      <Button onClick={onClickNextPage}>
+        <img src={RightArrow} alt="next" />
+      </Button>
+      <Button onClick={onClickLastPage}>Last Page</Button>
+    </nav>
+  );
+};
 
-export default Pagination
+export default Pagination;

@@ -1,8 +1,26 @@
+@import "./variables.scss";
+
 .App {
   max-width: 1000px;
-  width: 100%;
+  width: $width-100;
   padding-right: 3rem;
   padding-left: 3rem;
   margin-right: auto;
   margin-left: auto;
+  display: $display-flex;
+  flex-direction: $flex-direction-column;
+
+  .app__selectPagination {
+    display: $display-flex;
+    justify-content: space-between;
+  }
+
+  .app__select__characters {
+    display: $display-flex;
+    justify-content: flex-end;
+  }
+
+  .loading {
+    display: none;
+  }
 }

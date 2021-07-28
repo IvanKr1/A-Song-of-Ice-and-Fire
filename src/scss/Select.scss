@@ -1,0 +1,28 @@
+@import "./variables.scss";
+
+.select__container {
+    display: $display-flex;
+    flex-direction: $flex-direction-column;
+    margin-bottom: $rem-1;
+
+    select {
+        width: 12rem;
+        padding: $padding;
+        background-color: rgb(201, 196, 196);
+        border: $border-none;
+        border-radius: 0.30rem;
+        cursor: pointer;
+        font-size: $rem-1;
+        font-weight: 550;
+
+        option {
+            font-size: $rem-1;
+            font-weight: 550;
+        }
+    }
+
+    label {
+        font-size: $rem-1_2;
+        font-weight: 500;
+    }
+}
