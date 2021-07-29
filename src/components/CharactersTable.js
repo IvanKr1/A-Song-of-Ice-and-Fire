@@ -9,7 +9,7 @@ const CharactersTable = ({ characters }) => {
     if (houseId.length > 1) {
       const multipleAllegiances = houseId.map((id, index) => {
         return (
-          <Link key={index} to={`/house/${id}`} style={{ textDecoration: "none" }}>
+          <Link className='charactersTable__link' key={index} to={`/house/${id}`} style={{ textDecoration: "none" }}>
             {`${id} `}
           </Link>
         );
@@ -18,7 +18,7 @@ const CharactersTable = ({ characters }) => {
       return multipleAllegiances;
     } else {
       return (
-        <Link to={`/house/${houseId}`} style={{ textDecoration: "none" }}>
+        <Link className='charactersTable__link' to={`/house/${houseId}`} style={{ textDecoration: "none" }}>
           {houseId}
         </Link>
       );
@@ -62,7 +62,7 @@ const CharactersTable = ({ characters }) => {
 
   return (
     <>
-      <table className="characters__table">
+      <table className="charactersTable__table">
         <thead>
           <tr>
             <th>Character</th>

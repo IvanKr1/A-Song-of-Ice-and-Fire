@@ -3,13 +3,13 @@
 
 .searchField__container {
   position: relative;
-  padding: 0.30rem 0 0;
-  margin-top: $rem-1;
-  display: flex;
+  padding: 1rem 0 0;
+  margin-top: 1.2rem;
+  display: $display-flex;
   justify-content: center;
   margin-right: auto;
   margin-left: auto;
-  margin-bottom: $rem-1;
+  margin-bottom: 1.2rem;
  
 
 
@@ -21,7 +21,7 @@
     outline: 0;
     font-size: $rem-1_2;
     color: $color-white;
-    padding: 0.30rem 0;
+    padding: 0.6rem 0;
     background: transparent;
     transition: border-color 0.2s;
   }
@@ -33,7 +33,7 @@
     display: block;
     transition: $transition;
     font-size: $rem-1_2;
-    color: #fff;
+    color: $color-white;
   }
 
 
@@ -44,7 +44,7 @@
       display: block;
       transition: $transition;
       font-size: $rem-1;
-      color: #fff;
+      color: $color-white;
     }
 
     padding-bottom: 0.20rem;

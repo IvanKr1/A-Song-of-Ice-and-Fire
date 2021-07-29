@@ -1,10 +1,19 @@
 @import "./variables.scss";
 
-.characters__table {
+.charactersTable__table {
     font-family: OpenSans-Regular;
     border-collapse: collapse;
     width: $width-100;
     border: $border-none;
+
+    .charactersTable__link {
+        text-decoration: none;
+        color: rgb(11, 11, 194);
+    }
+
+    .charactersTable__link:hover {
+        color: rgb(67, 105, 230);
+    }
 
     td,
     th {
@@ -25,7 +34,7 @@
     }
 
     tr:nth-child(odd) {
-        background-color: #fff;
+        background-color: $color-white;
     }
 
     tr:hover {
@@ -38,7 +47,7 @@
         text-align: left;
         background-color: #36304a;
         font-size: 1.5rem;
-        color: #fff;
+        color: $color-white;
         line-height: 1.2;
         font-weight: unset;
     }
