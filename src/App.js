@@ -123,7 +123,7 @@ const App = () => {
       <div className="App">
         <Heading />
         <Route exact path="/">
-          <SearchField onSearchCulture={onSearchCulture} />
+          <SearchField onSearchCulture={onSearchCulture} value={currentCulture}/>
           {loading ? (
             <Loading />
           ) : (
@@ -139,6 +139,7 @@ const App = () => {
                   label="Filter By Gender"
                   options={selectGenderOptions}
                   onChange={onSelectGender}
+                  value={currentGender}
                 />
               </div>
               <CharactersTable characters={filterCharacters} />
@@ -155,6 +156,7 @@ const App = () => {
               label="Characters Per Page"
               options={selectResultsByPage}
               onChange={onSelectResultsPerPage}
+              value={resultsByPage}
             />
           </div>
         </Route>

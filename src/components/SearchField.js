@@ -1,7 +1,7 @@
 import React from "react";
 import "../scss/SearchField.scss";
 
-const SearchField = ({ onSearchCulture }) => {
+const SearchField = ({ onSearchCulture, value }) => {
   return (
     <div className="searchField__container">
       <input
@@ -9,7 +9,7 @@ const SearchField = ({ onSearchCulture }) => {
         className="searchField__input"
         name="culture"
         id="culture"
-        required
+        value={value}
         onChange={(e) => onSearchCulture(e.target.value)}
       />
       <label htmlFor="culture" className="searchField__label">
